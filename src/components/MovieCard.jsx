@@ -1,11 +1,15 @@
 
 import PropTypes from 'prop-types';
 import '../App.css';
+import closeEyeIcon from '/src/assets/close-eye-icon.jpg';
+import eyeIcon from '/src/assets/eye-icon.jpg';
 
 
 
 const MovieCard = ({ title, posterPath, voteAverage, isFavorite, onToggleFavorite,hasWatched,onToggleWatched }) => {
+ 
   const imageUrl = `https://image.tmdb.org/t/p/w500${posterPath}`;
+
 
   return (
     <div className="movie-card">
@@ -29,7 +33,9 @@ const MovieCard = ({ title, posterPath, voteAverage, isFavorite, onToggleFavorit
                 onToggleWatched();   // handles the watched toggle
             }}
             >
-            <img src= {hasWatched ? '../assets/eye-icon.jpg' : '../assets/close-eye-icon.jpg'}  alt=" Watch Status" />
+            {/* <img src = {eyeIcon}/> */}
+            {/* <img src= { hasWatched ? {eyeIcon} : {closeEyeIcon}}  alt=" Watch Status" /> */}
+            {hasWatched ? <img src = {eyeIcon}/>: <img src = {closeEyeIcon}/>}
         </button>
       </div>
     </div>
