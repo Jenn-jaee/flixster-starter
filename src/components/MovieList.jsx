@@ -12,7 +12,7 @@ const MovieList = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [sortOption, setSortOption] = useState('');
   const [favorites, setFavorites] = useState([]);
-
+  const [watched, setWatched] = useState([]);
 
 
 
@@ -80,11 +80,11 @@ const MovieList = () => {
     fetchMovies(1, 'nowPlaying');
   };
   const fetchMovieDetails = async (movieId) => {
-  const res = await fetch(
-    `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`
-  );
-  const data = await res.json();
-  setSelectedMovie(data);
+    const res = await fetch(
+        `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`
+    );
+    const data = await res.json();
+    setSelectedMovie(data);
 };
 
 const toggleFavorite = (movieId) => {
@@ -93,6 +93,15 @@ const toggleFavorite = (movieId) => {
       ? prevFavorites.filter((id) => id !== movieId)
       : [...prevFavorites, movieId]
   );
+};
+
+const toggleWatched = (movieId) => {
+    setWatched((prev) =>
+        prev.includes(movieId) 
+        ? prev.filter((id) => id !== movieId)
+        : [...prev, movieId]
+
+    );
 };
 
 
@@ -109,6 +118,11 @@ const getSortedMovies = () => {
 
   return sorted;
 };
+const clearSearchBtn = () => {
+    setSearchQuery('');
+    setMode('nowPlaying');
+    return null;
+}
 
 
 
@@ -122,26 +136,28 @@ const getSortedMovies = () => {
     )}
 
     <main>
-      <h1 id="Otter">🦦🍿</h1>
 
-      <div className="controls">
-        <button onClick={handleNowPlaying} disabled={mode === 'nowPlaying'}>Now Playing</button>
-        <input
-          type="text"
-          placeholder="Search movies..."
-          value={searchQuery}
-          onChange={handleSearchChange}
-        />
-        <button onClick={handleSearch} disabled={!searchQuery.trim()}>Search</button>
+        <h1 id="Otter">🦦🍿</h1>
 
-        <select
-            value={sortOption}
-            onChange={(e) => setSortOption(e.target.value)}
-            >
-            <option value="">Sort by</option>
-            <option value="title">Title (A–Z)</option>
-            <option value="release">Release Date (Newest)</option>
-            <option value="rating">Rating (Highest)</option>
+        <div className="controls">
+            <button onClick={handleNowPlaying} disabled={mode === 'nowPlaying'}> Now Playing </button>
+            <input
+            type="text"
+            placeholder="Search movies..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+            />
+            <button onClick={handleSearch} disabled={!searchQuery.trim()}>Search</button>
+            <button onClick={clearSearchBtn} disabled={!searchQuery.trim()}>Clear</button>
+
+            <select
+                value={sortOption}
+                onChange={(e) => setSortOption(e.target.value)}
+                >
+                <option value="">Sort by</option>
+                <option value="title">Title (A–Z)</option>
+                <option value="release">Release Date (Newest)</option>
+                <option value="rating">Rating (Highest)</option>
             </select>
       </div>
 
@@ -151,12 +167,15 @@ const getSortedMovies = () => {
           .map((movie) => (
             <div key={movie.id} onClick={() => fetchMovieDetails(movie.id)}>
               <MovieCard
-                title={movie.title}
-                posterPath={movie.poster_path}
-                voteAverage={movie.vote_average}
-                isFavorite={favorites.includes(movie.id)}
-                onToggleFavorite={() => toggleFavorite(movie.id)}
-            />
+                    title={movie.title}
+                    posterPath={movie.poster_path}
+                    voteAverage={movie.vote_average}
+                    isFavorite={favorites.includes(movie.id)}
+                    onToggleFavorite={() => toggleFavorite(movie.id)}
+                    hasWatched={watched.includes(movie.id)}
+                    onToggleWatched={() => toggleWatched(movie.id)}
+                    
+                />
             </div>
           ))}
       </div>

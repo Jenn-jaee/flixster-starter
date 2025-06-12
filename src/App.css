@@ -223,3 +223,24 @@ footer {
   cursor: pointer;
   margin-top: 5px;
 }
+
+.card-icons{
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap:70px;
+  background-color: transparent;
+  border: none;
+}
+.eye-icon img{ 
+  border: none;
+   height: 25px;
+   width: 25px;
+   background-color: transparent;
+
+}
+button.eye-icon{
+  border: none;
+  background-color: transparent;
+
+}
