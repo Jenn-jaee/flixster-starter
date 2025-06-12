@@ -2,11 +2,17 @@
 import PropTypes from 'prop-types';
 import './Sidebar.css';
 
-const Sidebar = ({ favorites, watched }) => {
+const Sidebar = ({mode, favorites, watched }) => {
+
+ 
   return (
     <aside className="sidebar">
       <div className="sidebar-section">
-        <h3>❤️ Favorites</h3>
+        <button onClick={mode}>🏠 Home</button>       
+      </div>
+      
+      <div className="sidebar-section">
+        <button>❤️ Favorites</button>
         {favorites.length === 0 ? (
           <p>No favorites yet.</p>
         ) : (
@@ -19,7 +25,7 @@ const Sidebar = ({ favorites, watched }) => {
       </div>
 
       <div className="sidebar-section">
-        <h3>👁️ Watched</h3>
+        <button>👁️ Watched</button>
         {watched.length === 0 ? (
           <p>No watched movies.</p>
         ) : (
@@ -30,6 +36,7 @@ const Sidebar = ({ favorites, watched }) => {
           </ul>
         )}
       </div>
+
     </aside>
   );
 };
@@ -37,6 +44,7 @@ const Sidebar = ({ favorites, watched }) => {
 Sidebar.propTypes = {
   favorites: PropTypes.array.isRequired,
   watched: PropTypes.array.isRequired,
+  mode: PropTypes.func.isRequired,
 };
 
 export default Sidebar;

@@ -14,7 +14,9 @@ const MovieList = () => {
   const [sortOption, setSortOption] = useState('');
   const [favorites, setFavorites] = useState([]);
   const [watched, setWatched] = useState([]);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+
 
   const apiKey = import.meta.env.VITE_API_KEY;
 
@@ -123,6 +125,19 @@ const MovieList = () => {
     return null;
   };
 
+  // for sidebar home
+   const homePage = () => {
+    setMode('nowPlaying');
+    setSidebarOpen(!sidebarOpen)
+  }
+ 
+    // Function to pass to the child component for the "Favorites" button click
+//   const handleShowFavorites = () => {
+//     alert("Displaying liked movies: " + prevFavorites.map(movieId => movie.title).join(', '));
+//   };
+
+
+
   return (
     <div className="layout-container">
         <button className="sidebar-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
@@ -130,6 +145,7 @@ const MovieList = () => {
         </button>
         {sidebarOpen && (
             <Sidebar
+            mode = {homePage}
             favorites={movies.filter((m) => favorites.includes(m.id))}
             watched={movies.filter((m) => watched.includes(m.id))}
             onClose={() => setSidebarOpen(false)}

@@ -33,8 +33,6 @@ const MovieCard = ({ title, posterPath, voteAverage, isFavorite, onToggleFavorit
                 onToggleWatched();   // handles the watched toggle
             }}
             >
-            {/* <img src = {eyeIcon}/> */}
-            {/* <img src= { hasWatched ? {eyeIcon} : {closeEyeIcon}}  alt=" Watch Status" /> */}
             {hasWatched ? <img src = {eyeIcon}/>: <img src = {closeEyeIcon}/>}
         </button>
       </div>
