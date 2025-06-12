@@ -1,5 +1,7 @@
 
 import PropTypes from 'prop-types';
+import '../App.css';
+
 
 
 const MovieCard = ({ title, posterPath, voteAverage, isFavorite, onToggleFavorite,hasWatched,onToggleWatched }) => {
