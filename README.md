@@ -98,6 +98,13 @@ Deployed Application (**required**): [Flixster Deployed Site](https://flixster-s
   - [x] The Home page displays all current movies in a grid view, the search bar, and the sort movies drop-down.
   - [x] The Favorites page displays all favorited movies in a grid view.
   - [x] The Watched page displays all watched movies in a grid view.
+     
+        
+
+### Image display
+![image](https://github.com/user-attachments/assets/525a3462-506c-4cd6-a459-2e75b892e8d7)
+![image](https://github.com/user-attachments/assets/67347613-abe0-4758-bf96-6b288cba1343)
+
 
 ### Walkthrough Video
 
