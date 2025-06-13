@@ -15,6 +15,7 @@ const MovieList = () => {
   const [favorites, setFavorites] = useState([]);
   const [watched, setWatched] = useState([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [viewMode, setViewMode] = useState('all');
 
 
 
@@ -89,34 +90,48 @@ const MovieList = () => {
     setSelectedMovie(data);
   };
 
-  const toggleFavorite = (movieId) => {
-    setFavorites((prevFavorites) =>
-      prevFavorites.includes(movieId)
-        ? prevFavorites.filter((id) => id !== movieId)
-        : [...prevFavorites, movieId]
-    );
-  };
+  const toggleFavorite = (movie) => {
+  setFavorites((prevFavorites) => {
+    const isAlreadyFavorited = prevFavorites.some((m) => m.id === movie.id);
+    return isAlreadyFavorited
+      ? prevFavorites.filter((m) => m.id !== movie.id)
+      : [...prevFavorites, movie];
+  });
+};
 
-  const toggleWatched = (movieId) => {
-    setWatched((prev) =>
-      prev.includes(movieId)
-        ? prev.filter((id) => id !== movieId)
-        : [...prev, movieId]
-    );
-  };
+
+
+  const toggleWatched = (movie) => {
+    setWatched((prevWatched) => {
+        const isAlreadyWatched = prevWatched.some((m) => m.id === movie.id);
+        return isAlreadyWatched
+        ? prevWatched.filter((m) => m.id !== movie.id)
+        : [...prevWatched, movie];
+    });
+};
+
 
   const getSortedMovies = () => {
-    let sorted = [...movies];
+
+    let filteredMovies;
+
+  if (viewMode === 'favorites') {
+    filteredMovies = [...favorites];
+  } else if (viewMode === 'watched') {
+    filteredMovies = [...watched];
+  } else {
+    filteredMovies = [...movies];
+  }
 
     if (sortOption === 'title') {
-      sorted.sort((a, b) => a.title.localeCompare(b.title));
+      filteredMovies.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortOption === 'release') {
-      sorted.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
+      filteredMovies.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
     } else if (sortOption === 'rating') {
-      sorted.sort((a, b) => b.vote_average - a.vote_average);
+      filteredMovies.sort((a, b) => b.vote_average - a.vote_average);
     }
 
-    return sorted;
+    return filteredMovies;
   };
 
   const clearSearchBtn = () => {
@@ -127,30 +142,37 @@ const MovieList = () => {
 
   // for sidebar home
    const homePage = () => {
+    setSearchQuery('');
+    setViewMode('all');
     setMode('nowPlaying');
-    setSidebarOpen(!sidebarOpen)
+    setPage(1);
+    setHasMore(true);
+    fetchMovies(1, 'nowPlaying');
+    setSidebarOpen(false);
   }
- 
-    // Function to pass to the child component for the "Favorites" button click
-//   const handleShowFavorites = () => {
-//     alert("Displaying liked movies: " + prevFavorites.map(movieId => movie.title).join(', '));
-//   };
 
 
 
-  return (
+
+   return (
     <div className="layout-container">
         <button className="sidebar-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
             ☰
         </button>
         {sidebarOpen && (
+        
             <Sidebar
-            mode = {homePage}
-            favorites={movies.filter((m) => favorites.includes(m.id))}
-            watched={movies.filter((m) => watched.includes(m.id))}
-            onClose={() => setSidebarOpen(false)}
+                mode={homePage}
+                favorites={favorites}
+                watched={watched}
+                onSelectView={(mode) => {
+                    setViewMode(mode);
+                    setSidebarOpen(false); // close after click
+                }}
             />
+        
         )}
+
 
         <main>
             {selectedMovie && (
@@ -193,11 +215,12 @@ const MovieList = () => {
                         title={movie.title}
                         posterPath={movie.poster_path}
                         voteAverage={movie.vote_average}
-                        isFavorite={favorites.includes(movie.id)}
-                        onToggleFavorite={() => toggleFavorite(movie.id)}
-                        hasWatched={watched.includes(movie.id)}
-                        onToggleWatched={() => toggleWatched(movie.id)}
+                        isFavorite={favorites.some((fav) => fav.id === movie.id)}
+                        onToggleFavorite={() => toggleFavorite(movie)}
+                        hasWatched={watched.some((w) => w.id === movie.id)}
+                        onToggleWatched={() => toggleWatched(movie)}
                     />
+
                     </div>
                 ))}
             </div>
