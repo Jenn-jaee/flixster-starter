@@ -108,7 +108,7 @@ Deployed Application (**required**): [Flixster Deployed Site](https://flixster-s
 
 ### Walkthrough Video
 
-`TODO://` Add the embedded URL code to your animated app walkthrough below.
+`TODO://` (https://www.loom.com/share/26f53bf9a2ec427f91070bd75caaae84).
 
 `ADD_EMBEDDED_CODE_HERE`
 
