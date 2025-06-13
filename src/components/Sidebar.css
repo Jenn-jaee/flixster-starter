@@ -41,3 +41,9 @@
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
 }
+
+.side-icons {
+  background-color: transparent;
+  font-size: larger;
+  border: none;
+}

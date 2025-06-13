@@ -195,7 +195,7 @@ const MovieList = () => {
                 <button onClick={handleSearch} disabled={!searchQuery.trim()}>Search</button>
                 <button onClick={clearSearchBtn} disabled={!searchQuery.trim()}>Clear</button>
 
-                <select
+                <select className='sort-box'
                 value={sortOption}
                 onChange={(e) => setSortOption(e.target.value)}
                 >

@@ -6,11 +6,11 @@ const Sidebar = ({ mode, favorites, watched, onSelectView }) => {
   return (
     <aside className="sidebar">
       <div className="sidebar-section">
-        <button onClick={mode}>🏠 Home</button>
+        <button className="side-icons" onClick={mode}>🏠 Home</button>
       </div>
 
       <div className="sidebar-section">
-        <button onClick={() => onSelectView('favorites')}>❤️ Favorites</button>
+        <button className="side-icons" onClick={() => onSelectView('favorites')}>❤️ Favorites</button>
         {favorites.length === 0 ? (
           <p>No favorites yet.</p>
         ) : (
@@ -23,7 +23,7 @@ const Sidebar = ({ mode, favorites, watched, onSelectView }) => {
       </div>
 
       <div className="sidebar-section">
-        <button onClick={() => onSelectView('watched')}>👁️ Watched</button>
+        <button className="side-icons" onClick={() => onSelectView('watched')}>👁️ Watched</button>
         {watched.length === 0 ? (
           <p>No watched movies.</p>
         ) : (
