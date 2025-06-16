@@ -140,11 +140,10 @@ const MovieList = () => {
     return null;
   };
 
-  // for sidebar home
+  // Homepage button in the side bar
    const homePage = () => {
     setSearchQuery('');
-    setViewMode('all');
-    setMode('nowPlaying');
+    setViewMode('all');  // Set view mode to 'all' to prevent home page and movie card layout breakage when nav bar is clicked
     setPage(1);
     setHasMore(true);
     fetchMovies(1, 'nowPlaying');
